@@ -1,20 +1,21 @@
--- Load all objects in the game
+-- Load everything in the Workspace, including nested folders
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
--- Function to load all objects
+-- Function to load all objects in the Workspace
 local function loadAllObjects()
     local objectsLoaded = 0
 
-    for _, object in ipairs(workspace:GetChildren()) do
-        if object:IsA("BasePart") or object:IsA("Model") then
-            -- Load the object if it's a BasePart
-            if object:IsA("BasePart") then
-                object:Load() -- Load the part
-            end
-            
+    -- Iterate through all descendants of the Workspace
+    for _, object in ipairs(workspace:GetDescendants()) do
+        if object:IsA("BasePart") then
+            -- Load the BasePart
+            object:Load() -- Load the part
+            objectsLoaded = objectsLoaded + 1
+        elseif object:IsA("Model") then
+            -- Optionally, you can handle models differently if needed
             objectsLoaded = objectsLoaded + 1
         end
     end
