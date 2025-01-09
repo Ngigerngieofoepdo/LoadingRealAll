@@ -4,24 +4,21 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 
--- Function to load all objects in the Workspace
+-- Function to access all objects in the Workspace
 local function loadAllObjects()
     local objectsLoaded = 0
 
     -- Iterate through all descendants of the Workspace
     for _, object in ipairs(workspace:GetDescendants()) do
-        if object:IsA("BasePart") then
-            -- Load the BasePart
-            object:Load() -- Load the part
-            objectsLoaded = objectsLoaded + 1
-        elseif object:IsA("Model") then
-            -- Optionally, you can handle models differently if needed
+        if object:IsA("BasePart") or object:IsA("Model") then
+            -- Simply accessing the object to ensure it's loaded
+            local name = object.Name -- Accessing the name to ensure it's loaded
             objectsLoaded = objectsLoaded + 1
         end
     end
 
-    print(objectsLoaded .. " objects loaded.")
+    print(objectsLoaded .. " objects accessed.")
 end
 
--- Call the function to load all objects
+-- Call the function to access all objects
 loadAllObjects()
