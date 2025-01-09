@@ -1,0 +1,26 @@
+-- Load all objects in the game
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+-- Function to load all objects
+local function loadAllObjects()
+    local objectsLoaded = 0
+
+    for _, object in ipairs(workspace:GetChildren()) do
+        if object:IsA("BasePart") or object:IsA("Model") then
+            -- Load the object if it's a BasePart
+            if object:IsA("BasePart") then
+                object:Load() -- Load the part
+            end
+            
+            objectsLoaded = objectsLoaded + 1
+        end
+    end
+
+    print(objectsLoaded .. " objects loaded.")
+end
+
+-- Call the function to load all objects
+loadAllObjects()
